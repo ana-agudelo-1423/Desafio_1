@@ -2,7 +2,7 @@
 #include <fstream>
 using namespace std;
 
-void leerCharPorChar(const char* nomArchivo, int* longitud) {  // Corregido: nounArchivo -> nomArchivo
+unsigned char* leerCharPorChar(const char* nomArchivo, int* longitud) {
     ifstream file(nomArchivo, ios::binary);
     if (!file.is_open()) {
         cerr << "Error abriendo archivo: " << nomArchivo << endl;
@@ -12,15 +12,13 @@ void leerCharPorChar(const char* nomArchivo, int* longitud) {  // Corregido: nou
 
     int capacidad = 1024;
     int usado = 0;
-    unsigned char* datos = new unsigned char*[capacidad];
+    unsigned char* datos = new unsigned char[capacidad];
 
     char c;
     while (file.get(c)) {
         if (usado >= capacidad) {
-            // duplicar capacidad
             capacidad *= 2;
             unsigned char* nuevo = new unsigned char[capacidad];
-            // copiar lo que ya estaba
             for (int i = 0; i < usado; i++) {
                 nuevo[i] = datos[i];
             }
@@ -56,7 +54,7 @@ void desencriptar(const unsigned char* entrada, int tam, int n, unsigned char cl
 }
 
 int main() {
-    const char* nomArchivo = "./debug/Encriptado1.txt";
+    const char* nomArchivo = "C:/Users/USER/Desktop/Desafio_1/datasetDesarrollo/Encriptado1.txt";
     int tam = 0;
 
     unsigned char* datos = leerCharPorChar(nomArchivo, &tam);
